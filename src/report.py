@@ -8,14 +8,14 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
 
-
 FONT_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'fonts')
 
 try:
-    pdfmetrics.registerFont(TTFont('Roboto', os.path.join(FONT_DIR, 'Roboto-Regular.ttf')))
-    pdfmetrics.registerFont(TTFont('Roboto-Bold', os.path.join(FONT_DIR, 'Roboto-Bold.ttf')))
-    FONT_REGULAR = 'Roboto'
-    FONT_BOLD = 'Roboto-Bold'
+    # Używamy DejaVu, który ma natywne wsparcie dla Latin Extended (PL)
+    pdfmetrics.registerFont(TTFont('DejaVu', os.path.join(FONT_DIR, 'DejaVuSans.ttf')))
+    pdfmetrics.registerFont(TTFont('DejaVu-Bold', os.path.join(FONT_DIR, 'DejaVuSans-Bold.ttf')))
+    FONT_REGULAR = 'DejaVu'
+    FONT_BOLD = 'DejaVu-Bold'
 except Exception as e:
     raise RuntimeError(f"Brak czcionki w folderze 'fonts'. Detale: {e}")
 
@@ -146,3 +146,4 @@ def generate_pdf_report(
     if os.path.exists("temp_chart.png"):
 
         os.remove("temp_chart.png")
+
