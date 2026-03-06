@@ -7,14 +7,17 @@ from reportlab.lib.units import cm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
+
+
+FONT_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'fonts')
+
 try:
-    pdfmetrics.registerFont(TTFont('Arial', 'arial.ttf'))
-    pdfmetrics.registerFont(TTFont('Arial-Bold', 'arialbd.ttf'))
-    FONT_REGULAR = 'Arial'
-    FONT_BOLD = 'Arial-Bold'
-except Exception:
-    FONT_REGULAR = 'Helvetica'
-    FONT_BOLD = 'Helvetica-Bold'
+    pdfmetrics.registerFont(TTFont('Roboto', os.path.join(FONT_DIR, 'Roboto-Regular.ttf')))
+    pdfmetrics.registerFont(TTFont('Roboto-Bold', os.path.join(FONT_DIR, 'Roboto-Bold.ttf')))
+    FONT_REGULAR = 'Roboto'
+    FONT_BOLD = 'Roboto-Bold'
+except Exception as e:
+    raise RuntimeError(f"Brak czcionki w folderze 'fonts'. Detale: {e}")
 
 def generate_pdf_report(
     output_path: str,
@@ -141,4 +144,5 @@ def generate_pdf_report(
 
     c.save()
     if os.path.exists("temp_chart.png"):
+
         os.remove("temp_chart.png")
